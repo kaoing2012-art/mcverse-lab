@@ -1,0 +1,18 @@
+{
+  "name": "mcverse-lab",
+  "version": "1.0.0",
+  "description": "McVerse Lab 麦门电影宇宙 —— 回答 4 道人格测试题，算出你的麦门电影人格，用麦当劳 MCP 真实餐品生成专属电影角色档案、海报提示词和 15 秒预告片分镜。",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test tests/",
+    "cli": "node src/cli.js"
+  },
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}

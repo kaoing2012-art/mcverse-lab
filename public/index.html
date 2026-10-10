@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="McVerse Lab 麦门电影宇宙 —— 回答 4 道题，测出你的麦门电影人格，生成专属电影角色档案、海报提示词和 15 秒预告片分镜。" />
+  <title>McVerse Lab · 麦门电影宇宙</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ============ 首页 ============ -->
+  <section id="scene-hero" class="scene active">
+    <div class="film-grain" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <p class="hero-kicker">MCDONALD'S MCP × CREATIVE CODING CONTEST</p>
+      <h1 class="hero-title">McVerse Lab</h1>
+      <p class="hero-sub">麦门电影宇宙</p>
+      <p class="hero-desc">
+        回答 4 道题，算出你的麦门电影人格。<br />
+        我们用麦当劳 MCP 查一份<b>真实餐品</b>，<br />
+        把它写进你的电影——角色档案、海报提示词、15 秒预告片分镜，一次打包带走。
+      </p>
+      <button id="btn-start" class="btn btn-primary">▶ 开机测试</button>
+      <p class="hero-note">全程约 1 分钟 · 娱乐向测试，非心理诊断 · 数据来自麦当劳 MCP 或明确标注的演示数据</p>
+    </div>
+  </section>
+
+  <!-- ============ 答题 ============ -->
+  <section id="scene-quiz" class="scene">
+    <header class="scene-head">
+      <p class="step-label"> casting 进行中</p>
+      <h2>回答 4 道题，进入你的电影</h2>
+      <div class="progress"><div id="quiz-progress" class="progress-bar"></div></div>
+    </header>
+    <div id="quiz-list"></div>
+    <button id="btn-submit" class="btn btn-primary" disabled>提交答案 🎬</button>
+    <p class="quiz-note">本测试仅用于娱乐，不构成任何科学心理诊断。</p>
+  </section>
+
+  <!-- ============ 加载 ============ -->
+  <section id="scene-loading" class="scene">
+    <div class="loader-box">
+      <div class="reel" aria-hidden="true"><span></span><span></span><span></span></div>
+      <p id="loading-text" class="loading-text">正在打开场灯…</p>
+      <p id="loading-detail" class="loading-detail"></p>
+    </div>
+  </section>
+
+  <!-- ============ 结果 ============ -->
+  <section id="scene-result" class="scene">
+    <!-- 人格结果卡 -->
+    <article class="card persona-card" id="persona-card">
+      <p class="card-kicker">你的麦门电影人格</p>
+      <h2 id="r-persona-name" class="persona-name"></h2>
+      <p id="r-persona-en" class="persona-en"></p>
+      <p id="r-persona-tagline" class="persona-tagline"></p>
+      <div id="r-scores" class="score-grid"></div>
+      <p id="r-source" class="source-badge"></p>
+    </article>
+
+    <!-- 电影海报风格卡 -->
+    <article class="card movie-card">
+      <p class="card-kicker">你的专属电影</p>
+      <div class="poster-frame">
+        <p id="r-movie-title" class="movie-title"></p>
+        <p id="r-movie-genre" class="movie-genre"></p>
+      </div>
+      <dl class="kv">
+        <dt>匹配餐品</dt><dd id="r-meal"></dd>
+        <dt>主角身份</dt><dd id="r-identity"></dd>
+        <dt>角色简介</dt><dd id="r-intro"></dd>
+        <dt>经典台词</dt><dd id="r-quote" class="quote"></dd>
+        <dt>分享文案</dt><dd id="r-share" class="share"></dd>
+      </dl>
+      <button class="btn btn-ghost" data-copy-target="r-share">复制分享文案</button>
+    </article>
+
+    <!-- 海报提示词 -->
+    <article class="card prompt-card">
+      <p class="card-kicker">电影海报提示词（可直接复制去生图）</p>
+      <div class="tabs">
+        <button class="tab active" data-tab="zh">中文版</button>
+        <button class="tab" data-tab="en">English</button>
+      </div>
+      <pre id="r-poster-zh" class="prompt-box"></pre>
+      <pre id="r-poster-en" class="prompt-box hidden"></pre>
+      <button class="btn btn-primary" id="btn-copy-poster">复制当前提示词</button>
+      <p class="tip">默认竖版 3:4；提示词已含画幅与负面提示词，适合主流 AI 生图工具。</p>
+    </article>
+
+    <!-- 分镜预览 -->
+    <article class="card storyboard-card">
+      <p class="card-kicker">15 秒预告片分镜（5 镜 × 3 秒）</p>
+      <div id="r-storyboard" class="shot-list"></div>
+      <button class="btn btn-ghost" data-copy-target="r-storyboard">复制全部分镜</button>
+    </article>
+
+    <!-- 导出 -->
+    <article class="card export-card">
+      <p class="card-kicker">带走你的电影档案</p>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="btn-export-txt">导出 TXT</button>
+        <button class="btn btn-primary" id="btn-export-json">导出 JSON</button>
+        <button class="btn btn-ghost" id="btn-restart">再测一次</button>
+      </div>
+      <p class="disclaimer">本页面为娱乐创作，非麦当劳官方出品；餐品信息以麦当劳官方渠道为准。</p>
+    </article>
+
+    <!-- Star 引导 -->
+    <article class="card star-card">
+      <p class="card-kicker">喜欢这个脑洞？</p>
+      <p class="star-text">项目已开源，正在参加 2026 麦当劳程序员创意开发大赛。<br />你的 Star 就是我们的票房。</p>
+      <a id="star-link" class="btn btn-star" href="https://github.com/YOUR_GITHUB/mcverse-lab" target="_blank" rel="noopener">⭐ Star on GitHub</a>
+    </article>
+  </section>
+
+  <div id="toast" class="toast" role="status"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
