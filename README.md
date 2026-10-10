@@ -100,8 +100,20 @@ mcverse-lab/
 │   ├── cli.js                   # 命令行入口
 │   └── data/demo-menu.json      # Demo 模式数据（明确标注非实时）
 ├── public/                      # HTML Demo（暗色电影主题，移动端优先）
-├── tests/                       # node:test 单元测试
-└── examples/                    # 示例输出
+├── scripts/
+│   ├── security-scan.mjs        # 凭证泄露自检（提交前必跑）
+│   └── publish-to-github.mjs    # 一键发布到 GitHub（创建仓库 + 推送）
+├── tests/                       # node:test 单元测试 + 真实 MCP 验证脚本
+├── docs/CONTEST_SUBMISSION.md   # 参赛提交清单与报名 Issue 文案
+└── examples/                    # 示例输出（live 真实数据 + demo）
+```
+
+## 🔒 提交前安全自检
+
+```bash
+node scripts/security-scan.mjs
+# 扫描全部文件，与本地真实 Token 精确比对 + 常见凭证格式匹配
+# 退出码 0 = 干净，可直接发布
 ```
 
 ## 🧠 技术要点
