@@ -25,6 +25,11 @@
 
 ## 🚀 快速开始
 
+```bash
+git clone https://github.com/kaoing2012-art/mcverse-lab.git
+cd mcverse-lab
+```
+
 ### 1. 申请麦当劳 MCP Token（免费）
 
 前往 [open.mcd.cn/mcp](https://open.mcd.cn/mcp) → 手机号登录 → 右上角「控制台」→「激活」→ 复制 Token。
@@ -142,6 +147,7 @@ node scripts/security-scan.mjs
 
 ## 🏆 参赛信息
 
+- 项目仓库：<https://github.com/kaoing2012-art/mcverse-lab>
 - 赛事：[2026 麦当劳程序员创意开发大赛](https://github.com/M-China/mcd-developer-innovation-challenge)
 - 开发工具：[WorkBuddy](https://www.workbuddy.cn/)
 
