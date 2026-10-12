@@ -19,7 +19,7 @@ import { QUIZ, PERSONAS, TIE_BREAK_ORDER } from './persona.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PUBLIC_DIR = join(__dirname, '..', 'public');
-const PORT = Number(process.env.MCVERSE_PORT || 3000);
+const PORT = Number(process.env.PORT || process.env.MCVERSE_PORT || 3000);
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
