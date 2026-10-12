@@ -27,6 +27,13 @@ body {
 /* 场景切换 */
 .scene { display: none; max-width: 720px; margin: 0 auto; padding: 24px 16px 64px; }
 .scene.active { display: block; animation: fadeUp .45s ease; }
+/* 修正：下方 #scene-hero / #scene-loading 用 ID 选择器声明了 display，
+   ID 优先级高于 .scene 类，会导致未激活的场景也一直显示（首页永远压在上面）。
+   这里用同等 ID 优先级把非激活场景压回隐藏。 */
+#scene-hero:not(.active),
+#scene-loading:not(.active),
+#scene-quiz:not(.active),
+#scene-result:not(.active) { display: none; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 
 /* ============ 首页 ============ */
