@@ -9,11 +9,11 @@
 | `README.md`（项目介绍/安装/示例/目标用户） | ✅ 已完成 |
 | `CONTEST_DECLARATION.md`（文件名与内容不可改动） | ✅ 使用官方原文，未做任何修改 |
 | `MCP_INTEGRATION.md`（MCP Server/Tool/流程/业务价值） | ✅ 已完成，含 2026-10-10 真实调用实测记录 |
-| 源代码（可运行内容） | ✅ 零依赖 Node.js，22 个单元测试通过 |
-| `workbuddy.md`（WorkBuddy 专项奖励，非必须） | ⚠️ 占位待导出对话上下文 |
-| GitHub 仓库为 Public | ⏳ 待发布 |
+| 源代码（可运行内容） | ✅ 零依赖 Node.js，**24 个单元测试全部通过** |
+| `workbuddy.md`（WorkBuddy 专项奖励，非必须） | ✅ **已加入 WorkBuddy 原始会话导出**（第四节内嵌完整逐轮对话） |
+| GitHub 仓库为 Public | ✅ **已发布**：https://github.com/kaoing2012-art/mcverse-lab |
 | 项目创建时间 2025-12-25 之后 | ✅ 2026-10-10 创建 |
-| 报名 Issue（正文 ≤1000 字，不带图片） | ⏳ 待提交 |
+| 报名 Issue（正文 ≤1000 字，不带图片） | ✅ **已提交（#494），官方已确认成功参赛** |
 
 ## 二、报名 Issue（可直接复制）
 
@@ -71,14 +71,14 @@ nodejs
 
 ## 四、提交前检查清单
 
-- [ ] GitHub 仓库已设为 **Public**
-- [ ] 仓库内包含 `CONTEST_DECLARATION.md`（内容与官方一致，未改动）
-- [ ] `workbuddy.md` 已替换为从 WorkBuddy 导出的开发对话上下文
-- [ ] 仓库内无任何真实 Token（可执行 `node scripts/security-scan.mjs` 自检）
-- [ ] 报名 Issue 已按格式提交，且正文不含图片
+- [x] GitHub 仓库已设为 **Public**
+- [x] 仓库内包含 `CONTEST_DECLARATION.md`（内容与官方一致，未改动）
+- [x] `workbuddy.md` 已加入 WorkBuddy 原始会话导出（逐轮对话上下文，凭证已脱敏）
+- [x] 仓库内无任何真实 Token（可执行 `node scripts/security-scan.mjs` 自检）
+- [x] 报名 Issue 已按格式提交（#494，官方已确认成功参赛），正文不含图片
 
 ## 五、发布后动作
 
 1. 把仓库地址回填到 `README.md` 中 Star 引导链接（`public/index.html` 的 `#star-link` 同样需要）
-2. 在报名的 Issue 里等待官方回复成功通知
+2. ~~在报名的 Issue 里等待官方回复成功通知~~ ✅ 已完成：Issue #494 官方已确认成功参赛
 3. 拉 Star：把 Demo 截图 + 一句话说明发到社交媒体（Star 数决定排行榜名次，10-25 23:59 截止）
