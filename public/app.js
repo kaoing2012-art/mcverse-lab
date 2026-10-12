@@ -154,6 +154,17 @@
 
     $('#r-movie-title').textContent = r.character.movieTitle;
     $('#r-movie-genre').textContent = r.character.movieGenre;
+
+    // 海报图：按人格展示 AI 生成的海报（示例图，由本项目提示词产出）
+    const pid = String(r.persona?.id || 'P1').toLowerCase();
+    const posterPath = `posters/${pid}.jpg`;
+    const img = $('#r-poster-img');
+    img.onerror = () => { const f = img.closest('.poster-figure'); if (f) f.classList.add('hidden'); };
+    img.src = posterPath;
+    img.alt = `${r.character.personaName} · ${r.character.movieTitle}（AI 生成示例海报）`;
+    const dl = $('#r-poster-download');
+    dl.href = posterPath;
+    dl.setAttribute('download', `麦门电影宇宙-${r.character.personaName}-海报.jpg`);
     $('#r-meal').textContent = `${r.meal.item.name}（匹配度 ${r.meal.score} 分）` +
       (r.alternativeMeals?.length ? ` · 备选：${r.alternativeMeals.join('、')}` : '');
     $('#r-identity').textContent = r.character.protagonistIdentity;

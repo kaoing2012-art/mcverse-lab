@@ -21,6 +21,13 @@
         把它写进你的电影——角色档案、海报提示词、15 秒预告片分镜，一次打包带走。
       </p>
       <button id="btn-start" class="btn btn-primary">▶ 开机测试</button>
+      <div class="poster-strip" aria-hidden="true">
+        <img src="posters/p3.jpg" alt="" loading="lazy" />
+        <img src="posters/p5.jpg" alt="" loading="lazy" />
+        <img src="posters/p1.jpg" alt="" loading="lazy" />
+        <img src="posters/p4.jpg" alt="" loading="lazy" />
+        <img src="posters/p6.jpg" alt="" loading="lazy" />
+      </div>
       <p class="hero-note">全程约 1 分钟 · 娱乐向测试，非心理诊断 · 数据来自麦当劳 MCP 或明确标注的演示数据</p>
     </div>
   </section>
@@ -61,6 +68,10 @@
     <!-- 电影海报风格卡 -->
     <article class="card movie-card">
       <p class="card-kicker">你的专属电影</p>
+      <figure class="poster-figure">
+        <img id="r-poster-img" class="poster-img" src="" alt="AI 生成的概念海报（示例）" />
+        <figcaption class="poster-hint">↑ AI 按下方提示词生成的示例海报 · 可在 WorkBuddy 里为你的片名重新出图</figcaption>
+      </figure>
       <div class="poster-frame">
         <p id="r-movie-title" class="movie-title"></p>
         <p id="r-movie-genre" class="movie-genre"></p>
@@ -72,7 +83,10 @@
         <dt>经典台词</dt><dd id="r-quote" class="quote"></dd>
         <dt>分享文案</dt><dd id="r-share" class="share"></dd>
       </dl>
-      <button class="btn btn-ghost" data-copy-target="r-share">复制分享文案</button>
+      <div class="btn-row">
+        <button class="btn btn-ghost" data-copy-target="r-share">复制分享文案</button>
+        <a id="r-poster-download" class="btn btn-ghost" href="#" download>下载海报</a>
+      </div>
     </article>
 
     <!-- 海报提示词 -->

@@ -29,14 +29,26 @@
 </tr>
 </table>
 
-### 📄 一份完整电影档案包含什么
+### 🎬 不是只给提示词 —— 可以直接出海报
 
-- 🎬 **人格结果卡** —— 人格名称 + 宣传语 + 六维得分（可解释、可复现）
-- 🍟 **匹配餐品** —— 麦当劳 MCP 实时查询的真实餐品，附匹配度与备选
-- 📽 **电影档案** —— 片名 / 类型 / 主角身份 / 角色简介 / 经典台词 / 分享文案
-- 🎨 **海报提示词** —— 中英双语，竖版 3:4，含灯光、色彩、构图与负面提示词
-- 🎞 **15 秒分镜** —— 5 镜 × 3 秒，每镜含时间码 / 景别 / 运镜 / 灯光 / 音效 / AI 视频提示词
-- 📦 **一键导出** —— TXT 与 JSON，复制提示词即可直接进生图/生视频工具
+配套的 WorkBuddy Skill 会把上面的提示词**直接交给生图能力，产出真海报**。下面是六个人格的示例海报（全部由本项目提示词 + WorkBuddy 生图产出）：
+
+<table>
+<tr>
+<td width="16%" align="center"><img src="public/posters/p1.jpg" alt="天生主角型" /><br /><sub>天生主角型</sub></td>
+<td width="16%" align="center"><img src="public/posters/p2.jpg" alt="热血冒险型" /><br /><sub>热血冒险型</sub></td>
+<td width="16%" align="center"><img src="public/posters/p3.jpg" alt="温柔治愈型" /><br /><sub>温柔治愈型</sub></td>
+<td width="16%" align="center"><img src="public/posters/p4.jpg" alt="冷静智谋型" /><br /><sub>冷静智谋型</sub></td>
+<td width="16%" align="center"><img src="public/posters/p5.jpg" alt="快乐社交型" /><br /><sub>快乐社交型</sub></td>
+<td width="16%" align="center"><img src="public/posters/p6.jpg" alt="自由浪漫型" /><br /><sub>自由浪漫型</sub></td>
+</tr>
+</table>
+
+### 📄 一份完整电影档案（含海报、档案、提示词、分镜）
+
+<img src="docs/03-result-full.jpg" alt="完整结果页" width="100%" />
+
+<sub>人格卡 · AI 海报 · 电影档案 · 海报提示词（中英双语）· 5 镜分镜 · 一键导出 —— 一屏跑完全流程。</sub>
 
 ### 📱 手机端同样能打
 
@@ -52,6 +64,7 @@
 | 自动查询麦当劳 MCP | 与人格匹配的**真实餐品**（MCP 不可用时明确标注 DEMO 模式） |
 | 一键生成 | 电影片名 / 类型 / 主角身份 / 角色简介 / 经典台词 / 分享文案 |
 | 生成海报提示词 | 中英双语，竖版 3:4，含画幅与负面提示词，可直接粘贴进生图工具 |
+| **直接把海报画出来** | 配套 Skill 可调用 WorkBuddy 生图能力，把提示词变成**真海报图**（每张约 5-10 积分，需你确认） |
 | 生成预告片分镜 | 5 镜 × 3 秒 = 15 秒，时间码精确，每镜含 AI 视频提示词 |
 
 六种人格：**天生主角型 / 热血冒险型 / 温柔治愈型 / 冷静智谋型 / 快乐社交型 / 自由浪漫型**
