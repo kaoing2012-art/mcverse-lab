@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>McVerse Lab 预览</title>
+<link rel="stylesheet" href="../../public/style.css" />
+<style>body{background:var(--bg)}.scene{padding:20px 12px 40px}</style>
+</head>
+<body>
+
+<div style="min-height:100vh;background:#08070b;display:flex;justify-content:center;padding:26px 0">
+  <div style="width:390px;background:var(--bg);border:8px solid #24222c;border-radius:34px;overflow:hidden;box-shadow:0 22px 70px rgba(0,0,0,.7)">
+    
+<section id="scene-result" class="scene active">
+  <article class="card persona-card">
+    <p class="card-kicker">你的麦门电影人格</p>
+    <h2 class="persona-name">天生主角型</h2>
+    <p class="persona-en">The Born Lead</p>
+    <p class="persona-tagline">镜头一生下来就跟着你走</p>
+    <div class="score-grid"><div class="score-cell"><div class="n">4</div><div class="l">天生主角型</div></div><div class="score-cell"><div class="n">3</div><div class="l">热血冒险型</div></div><div class="score-cell"><div class="n">2</div><div class="l">温柔治愈型</div></div><div class="score-cell"><div class="n">0</div><div class="l">冷静智谋型</div></div><div class="score-cell"><div class="n">2</div><div class="l">快乐社交型</div></div><div class="score-cell"><div class="n">0</div><div class="l">自由浪漫型</div></div></div>
+    <p class="source-badge live">餐品数据：麦当劳 MCP 实时查询</p>
+  </article>
+
+  <article class="card movie-card">
+    <p class="card-kicker">你的专属电影</p>
+    <div class="poster-frame">
+      <p class="movie-title">《芝士双层安格斯厚牛堡：今夜加冕》</p>
+      <p class="movie-genre">动作传记片</p>
+    </div>
+    <dl class="kv">
+      <dt>匹配餐品</dt><dd>芝士双层安格斯厚牛堡（匹配度 6 分）</dd>
+      <dt>主角身份</dt><dd>深夜店的隐形主角，谁进店都以为他是店长</dd>
+      <dt>角色简介</dt><dd>凌晨的城市按下静音，只有那家店的灯还亮着。芝士双层安格斯厚牛堡在他手里不是晚餐，是加冕的权杖。他从不需要 C 位——因为镜头自己会找过来。喝完最后一口，把包装纸捏成球，稳稳投进垃圾桶：好戏，正式开场。</dd>
+      <dt>经典台词</dt><dd class="quote">「不是我在吃芝士双层安格斯厚牛堡，是这部电影等这口等了三十年。」</dd>
+      <dt>分享文案</dt><dd class="share">测出来我是天生主角型，连芝士双层安格斯厚牛堡在我手里都像道具组精挑的。麦门电影宇宙，今晚开画。</dd>
+    </dl>
+  </article>
+
+  <article class="card prompt-card">
+    <p class="card-kicker">电影海报提示词（可直接复制去生图）</p>
+    <div class="tabs"><button class="tab active">中文版</button><button class="tab">English</button></div>
+    <pre class="prompt-box">主体：一个人独自坐在麦当劳餐厅正中的长桌前，双手捧起芝士双层安格斯厚牛堡，微微抬头面向镜头
+角色设定：风衣随意搭在椅背，眼神笃定带一点疲惫，像刚下片场的电影主角
+场景：深夜麦当劳内景，窗外是虚化的城市灯火
+景别与构图：竖版 3:4，中景平视构图，人物居中偏下，头顶留出大面积暗部空间
+灯光方向：顶光为主光源，在面部形成微弱伦勃朗光，背景边缘溢出暖色轮廓光
+色彩风格：暖金 + 墨蓝双色电影调色，高对比、低饱和暗部
+镜头质感：35mm 胶片质感，轻微颗粒，浅景深
+画幅比例：竖版 3:4 电影海报
+负面提示词：文字、水印、logo、多人、卡通、过曝、畸变面部、多余手指</pre>
+  </article>
+
+  <article class="card storyboard-card">
+    <p class="card-kicker">15 秒预告片分镜（5 镜 × 3 秒）</p>
+    <div class="shot-list">
+      <div class="shot">
+        <div class="shot-head">
+          <span class="shot-no">镜头 1</span>
+          <span class="shot-tc">00:00-00:03</span>
+          <span class="shot-size">大远景</span>
+        </div>
+        <p class="shot-content">自动门缓缓合上，店里只剩一个人的剪影</p>
+        <p class="shot-meta">运镜：缓慢推进｜灯光：低照度环境光，剪影效果｜音效：环境底噪 + 一声遥远的门铃</p>
+        <pre class="shot-prompt">自动门缓缓合上，店里只剩一个人的剪影，大远景，缓慢推进镜头，低照度环境光，剪影效果，电影感画面，15秒预告片第1镜（时间码00:00-00:03），画幅2.39:1</pre>
+      </div>
+      <div class="shot">
+        <div class="shot-head">
+          <span class="shot-no">镜头 2</span>
+          <span class="shot-tc">00:03-00:06</span>
+          <span class="shot-size">中景</span>
+        </div>
+        <p class="shot-content">主角拎着芝士双层安格斯厚牛堡的纸袋走向长桌，步频稳得像配了节拍器</p>
+        <p class="shot-meta">运镜：跟拍｜灯光：侧光渐亮，人物轮廓清晰｜音效：脚步声 + 鼓点进入</p>
+        <pre class="shot-prompt">主角拎着芝士双层安格斯厚牛堡的纸袋走向长桌，步频稳得像配了节拍器，中景，跟拍镜头，侧光渐亮，人物轮廓清晰，电影感画面，15秒预告片第2镜（时间码00:03-00:06），画幅2.39:1</pre>
+      </div>
+      <div class="shot">
+        <div class="shot-head">
+          <span class="shot-no">镜头 3</span>
+          <span class="shot-tc">00:06-00:09</span>
+          <span class="shot-size">近景</span>
+        </div>
+        <p class="shot-content">邻桌投来打量的目光，他头也不抬，直接咬下第一口芝士双层安格斯厚牛堡</p>
+        <p class="shot-meta">运镜：手持轻微晃动｜灯光：明暗对比加强，制造张力｜音效：低音提琴渐强 + 心跳声</p>
+        <pre class="shot-prompt">邻桌投来打量的目光，他头也不抬，直接咬下第一口芝士双层安格斯厚牛堡，近景，手持轻微晃动镜头，明暗对比加强，制造张力，电影感画面，15秒预告片第3镜（时间码00:06-00:09），画幅2.39:1</pre>
+      </div>
+      <div class="shot">
+        <div class="shot-head">
+          <span class="shot-no">镜头 4</span>
+          <span class="shot-tc">00:09-00:12</span>
+          <span class="shot-size">特写</span>
+        </div>
+        <p class="shot-content">顶光骤亮，慢镜头里酱汁滑落，他终于抬眼看向镜头</p>
+        <p class="shot-meta">运镜：慢动作 + 环绕｜灯光：顶光全开，视觉高潮｜音效：音乐推向最高点后骤停半拍</p>
+        <pre class="shot-prompt">顶光骤亮，慢镜头里酱汁滑落，他终于抬眼看向镜头，特写，慢动作 + 环绕镜头，顶光全开，视觉高潮，电影感画面，15秒预告片第4镜（时间码00:09-00:12），画幅2.39:1</pre>
+      </div>
+      <div class="shot">
+        <div class="shot-head">
+          <span class="shot-no">镜头 5</span>
+          <span class="shot-tc">00:12-00:15</span>
+          <span class="shot-size">大远景拉出</span>
+        </div>
+        <p class="shot-content">画面定格成暗金色调，片名浮现</p>
+        <p class="shot-meta">运镜：垂直拉升｜灯光：收光至黑，仅剩片名亮起｜音效：一声定音鼓 + 余韵混响</p>
+        <pre class="shot-prompt">画面定格成暗金色调，片名浮现，大远景拉出，垂直拉升镜头，收光至黑，仅剩片名亮起，电影感画面，15秒预告片第5镜（时间码00:12-00:15），画幅2.39:1</pre>
+      </div></div>
+  </article>
+
+  <article class="card export-card">
+    <p class="card-kicker">带走你的电影档案</p>
+    <div class="btn-row">
+      <button class="btn btn-primary">导出 TXT</button>
+      <button class="btn btn-primary">导出 JSON</button>
+      <button class="btn btn-ghost">再测一次</button>
+    </div>
+    <p class="disclaimer">本页面为娱乐创作，非麦当劳官方出品；餐品信息以麦当劳官方渠道为准。</p>
+  </article>
+
+  <article class="card star-card">
+    <p class="card-kicker">喜欢这个脑洞？</p>
+    <p class="star-text">项目已开源，正在参加 2026 麦当劳程序员创意开发大赛。<br />你的 Star 就是我们的票房。</p>
+    <a class="btn btn-star" href="https://github.com/kaoing2012-art/mcverse-lab">⭐ Star on GitHub</a>
+  </article>
+</section>
+  </div>
+</div>
+</body>
+</html>

@@ -1,13 +1,46 @@
 # 🍔 McVerse Lab · 麦门电影宇宙
 
+![Node.js](https://img.shields.io/badge/Node.js-18%2B-3c873a?style=flat-square)
+![依赖](https://img.shields.io/badge/dependencies-0-e0b25c?style=flat-square)
+![测试](https://img.shields.io/badge/tests-22%20passed-2ea44f?style=flat-square)
+![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
+![Contest](https://img.shields.io/badge/2026%20M--CODE-Contest-c8102e?style=flat-square)
+
 > 回答 4 道题，测出你的**麦门电影人格**。系统通过麦当劳 MCP 查一份**真实餐品**，
 > 把它写进你的专属电影——角色档案、中英双语海报提示词、15 秒预告片分镜，一次打包带走。
+
+<img src="docs/01-hero.png" alt="McVerse Lab 首页" width="100%" />
 
 基于 [麦当劳中国官方 MCP 服务](https://github.com/M-China/mcd-mcp-server) 开发的参赛 Skill
 —— **2026 麦当劳程序员创意开发大赛**（[官方活动仓库](https://github.com/M-China/mcd-developer-innovation-challenge)）。
 推荐使用 [WorkBuddy](https://www.workbuddy.cn/) 开发与运行。
 
 **本作品为娱乐创作，非麦当劳官方产品，不构成官方背书。**
+
+---
+
+## 👀 三种人格长什么样（以下全部为真实 MCP 数据）
+
+<table>
+<tr>
+<td width="33%" align="center"><img src="docs/04-card-p1.png" alt="天生主角型" /><br /><b>天生主角型</b><br /><sub>匹配：芝士双层安格斯厚牛堡<br />《芝士双层安格斯厚牛堡：今夜加冕》</sub></td>
+<td width="33%" align="center"><img src="docs/05-card-p2.png" alt="热血冒险型" /><br /><b>热血冒险型</b><br /><sub>匹配：麦辣鸡翅-2块<br />《麦辣鸡翅-2块疾走》</sub></td>
+<td width="33%" align="center"><img src="docs/06-card-p3.png" alt="温柔治愈型" /><br /><b>温柔治愈型</b><br /><sub>匹配：圆筒冰淇淋<br />《圆筒冰淇淋小馆》</sub></td>
+</tr>
+</table>
+
+### 📄 一份完整电影档案包含什么
+
+- 🎬 **人格结果卡** —— 人格名称 + 宣传语 + 六维得分（可解释、可复现）
+- 🍟 **匹配餐品** —— 麦当劳 MCP 实时查询的真实餐品，附匹配度与备选
+- 📽 **电影档案** —— 片名 / 类型 / 主角身份 / 角色简介 / 经典台词 / 分享文案
+- 🎨 **海报提示词** —— 中英双语，竖版 3:4，含灯光、色彩、构图与负面提示词
+- 🎞 **15 秒分镜** —— 5 镜 × 3 秒，每镜含时间码 / 景别 / 运镜 / 灯光 / 音效 / AI 视频提示词
+- 📦 **一键导出** —— TXT 与 JSON，复制提示词即可直接进生图/生视频工具
+
+### 📱 手机端同样能打
+
+<img src="docs/07-mobile.png" alt="手机宽度下的结果页" width="300" />
 
 ---
 

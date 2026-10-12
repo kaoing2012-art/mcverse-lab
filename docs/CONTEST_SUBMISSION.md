@@ -34,7 +34,33 @@ McVerse Lab 麦门电影宇宙 —— 4 题测出你的麦门电影人格，MCP 
 
 > ⚠️ 正文约 480 字，符合 ≤1000 字要求；**请勿在 Issue 中附加图片**。
 
-## 三、提交前检查清单
+## 三、仓库 Description 与 Topics（复制粘贴即可）
+
+**Description**（仓库右上角 ⚙️ → Description）：
+
+```
+麦门电影宇宙 —— 4 道题测出你的麦门电影人格，用麦当劳 MCP 真实餐品生成电影角色档案、中英双语海报提示词与 15 秒预告片分镜（零依赖 Node.js + WorkBuddy Skill + 移动端 HTML Demo）
+```
+
+**Topics**（同页 Topics 输入框，逐个回车添加）：
+
+```
+mcp
+mcdonalds
+workbuddy
+agent-skill
+ai-video
+text-to-image
+prompt-engineering
+nodejs
+```
+
+> Topics 会影响 GitHub 搜索结果排序与「相关仓库」推荐，建议全部填上。
+
+**Social Preview**（可选，提升分享卡片点击率）：
+仓库 ⚙️ → Social preview → Upload an image → 用 `docs/01-hero.png`（1200×630 效果最佳，可先裁剪）。
+
+## 四、提交前检查清单
 
 - [ ] GitHub 仓库已设为 **Public**
 - [ ] 仓库内包含 `CONTEST_DECLARATION.md`（内容与官方一致，未改动）
@@ -42,7 +68,7 @@ McVerse Lab 麦门电影宇宙 —— 4 题测出你的麦门电影人格，MCP 
 - [ ] 仓库内无任何真实 Token（可执行 `node scripts/security-scan.mjs` 自检）
 - [ ] 报名 Issue 已按格式提交，且正文不含图片
 
-## 四、发布后动作
+## 五、发布后动作
 
 1. 把仓库地址回填到 `README.md` 中 Star 引导链接（`public/index.html` 的 `#star-link` 同样需要）
 2. 在报名的 Issue 里等待官方回复成功通知
