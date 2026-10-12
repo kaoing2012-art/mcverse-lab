@@ -8,76 +8,161 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- ============ 首页 ============ -->
+  <!-- ============ 首页：Hero ============ -->
   <section id="scene-hero" class="scene active">
     <div class="film-grain" aria-hidden="true"></div>
+    <div class="hero-vignette" aria-hidden="true"></div>
+
     <div class="hero-inner">
       <p class="hero-kicker">MCDONALD'S MCP × CREATIVE CODING CONTEST</p>
       <h1 class="hero-title">McVerse Lab</h1>
       <p class="hero-sub">麦门电影宇宙</p>
+      <p class="hero-tagline">4 道题，测出你的麦门电影人格</p>
       <p class="hero-desc">
-        回答 4 道题，算出你的麦门电影人格。<br />
-        我们用麦当劳 MCP 查一份<b>真实餐品</b>，<br />
-        把它写进你的电影——角色档案、海报提示词、15 秒预告片分镜，一次打包带走。
+        我们用麦当劳 MCP 查一份<b>真实餐品</b>，把它写进你的电影——<br class="br-desktop" />
+        角色档案 · 海报提示词 · 15 秒预告片分镜，一次打包带走。
       </p>
-      <button id="btn-start" class="btn btn-primary">▶ 开机测试</button>
-      <div class="poster-strip" aria-hidden="true">
-        <img src="posters/p3.jpg" alt="" loading="lazy" />
-        <img src="posters/p5.jpg" alt="" loading="lazy" />
-        <img src="posters/p1.jpg" alt="" loading="lazy" />
-        <img src="posters/p4.jpg" alt="" loading="lazy" />
-        <img src="posters/p6.jpg" alt="" loading="lazy" />
+      <div class="hero-cta">
+        <button id="btn-start" class="btn btn-primary"><span class="btn-play" aria-hidden="true">▶</span> 开始试镜</button>
+        <a class="btn btn-ghost" href="#universe" id="btn-peek">先看角色 ↓</a>
       </div>
-      <p class="hero-note">全程约 1 分钟 · 娱乐向测试，非心理诊断 · 数据来自麦当劳 MCP 或明确标注的演示数据</p>
     </div>
+
+    <!-- 错层海报主视觉：中心一张 Hero Poster，两侧透视退后 -->
+    <div class="hero-stage" aria-hidden="true">
+      <div class="hero-poster hero-poster-left"><img src="posters/p6.jpg" alt="" loading="lazy" /></div>
+      <div class="hero-poster hero-poster-main"><img src="posters/p1.jpg" alt="" loading="lazy" /><i class="poster-sheen"></i></div>
+      <div class="hero-poster hero-poster-right"><img src="posters/p2.jpg" alt="" loading="lazy" /></div>
+      <div class="hero-stage-glow" aria-hidden="true"></div>
+    </div>
+    <div class="hero-fade" aria-hidden="true"></div>
+
+    <p class="hero-note">全程约 1 分钟 · 娱乐向测试，非心理诊断 · 数据来自麦当劳 MCP 或明确标注的演示数据</p>
   </section>
 
-  <!-- ============ 答题 ============ -->
+  <!-- ============ 首页：Movie Universe Showcase（非场景，随 Hero 一起显示） ============ -->
+  <section id="universe" class="universe">
+    <div class="film-grain" aria-hidden="true"></div>
+    <header class="universe-head">
+      <p class="universe-kicker">NOW SHOWING</p>
+      <h2 class="universe-title">WELCOME TO <span>McVERSE</span></h2>
+      <p class="universe-sub">六种麦门电影人格，正在等你试镜。这是其中三位——</p>
+    </header>
+    <div class="universe-grid">
+      <article class="u-card u-card-1">
+        <div class="u-poster"><img src="posters/p1.jpg" alt="天生主角型概念海报" loading="lazy" /><i class="poster-sheen"></i></div>
+        <div class="u-meta">
+          <p class="u-genre">动作传记片</p>
+          <h3 class="u-name">天生主角型</h3>
+          <p class="u-en">THE BORN LEAD</p>
+          <p class="u-tagline">镜头一生下来就跟着你走</p>
+        </div>
+      </article>
+      <article class="u-card u-card-2">
+        <div class="u-poster"><img src="posters/p2.jpg" alt="热血冒险型概念海报" loading="lazy" /><i class="poster-sheen"></i></div>
+        <div class="u-meta">
+          <p class="u-genre">热血动作片</p>
+          <h3 class="u-name">热血冒险型</h3>
+          <p class="u-en">THE BLAZE RUNNER</p>
+          <p class="u-tagline">辣是燃料，冲是本能</p>
+        </div>
+      </article>
+      <article class="u-card u-card-3">
+        <div class="u-poster"><img src="posters/p3.jpg" alt="温柔治愈型概念海报" loading="lazy" /><i class="poster-sheen"></i></div>
+        <div class="u-meta">
+          <p class="u-genre">治愈日常片</p>
+          <h3 class="u-name">温柔治愈型</h3>
+          <p class="u-en">THE COMFORT REEL</p>
+          <p class="u-tagline">你是别人世界里的一场好天气</p>
+        </div>
+      </article>
+    </div>
+    <div class="universe-cta">
+      <button class="btn btn-primary" data-goto-quiz><span class="btn-play" aria-hidden="true">▶</span> 我也想试镜</button>
+      <p class="universe-note">还有三种人格，答题后揭晓 —— 你的电影是哪一部？</p>
+    </div>
+    <footer class="hero-foot">
+      <p>本产品为娱乐创作，非麦当劳官方出品 · 餐品信息以麦当劳官方渠道为准</p>
+    </footer>
+  </section>
+
+  <!-- ============ 答题：Casting Session ============ -->
   <section id="scene-quiz" class="scene">
+    <div class="film-grain" aria-hidden="true"></div>
     <header class="scene-head">
-      <p class="step-label"> casting 进行中</p>
+      <p class="clapper-label"><span class="clapper-icon" aria-hidden="true">🎬</span> CASTING SESSION · 角色试镜中</p>
       <h2>回答 4 道题，进入你的电影</h2>
-      <div class="progress"><div id="quiz-progress" class="progress-bar"></div></div>
+      <!-- 胶片格放映进度 -->
+      <div class="filmstrip" id="filmstrip" aria-label="答题进度">
+        <div class="frame" data-frame="1"><i></i><span>SCENE 01</span></div>
+        <div class="frame" data-frame="2"><i></i><span>SCENE 02</span></div>
+        <div class="frame" data-frame="3"><i></i><span>SCENE 03</span></div>
+        <div class="frame" data-frame="4"><i></i><span>SCENE 04</span></div>
+        <div class="projector-line" aria-hidden="true"><div id="quiz-progress"></div></div>
+      </div>
     </header>
     <div id="quiz-list"></div>
-    <button id="btn-submit" class="btn btn-primary" disabled>提交答案 🎬</button>
+    <button id="btn-submit" class="btn btn-primary" disabled>提交答案 · 开机 🎬</button>
     <p class="quiz-note">本测试仅用于娱乐，不构成任何科学心理诊断。</p>
   </section>
 
-  <!-- ============ 加载 ============ -->
+  <!-- ============ 加载：电影制作中 ============ -->
   <section id="scene-loading" class="scene">
+    <div class="film-grain grain-strong" aria-hidden="true"></div>
     <div class="loader-box">
+      <div class="projector-beam" aria-hidden="true"></div>
+      <div class="ghost-poster" aria-hidden="true"></div>
       <div class="reel" aria-hidden="true"><span></span><span></span><span></span></div>
+      <p class="reel-label" aria-hidden="true">● REC</p>
       <p id="loading-text" class="loading-text">正在打开场灯…</p>
       <p id="loading-detail" class="loading-detail"></p>
+      <div class="loader-sweep" aria-hidden="true"></div>
     </div>
   </section>
 
   <!-- ============ 结果 ============ -->
-  <section id="scene-result" class="scene">
-    <!-- 人格结果卡 -->
-    <article class="card persona-card" id="persona-card">
-      <p class="card-kicker">你的麦门电影人格</p>
-      <h2 id="r-persona-name" class="persona-name"></h2>
-      <p id="r-persona-en" class="persona-en"></p>
-      <p id="r-persona-tagline" class="persona-tagline"></p>
-      <div id="r-scores" class="score-grid"></div>
-      <p id="r-source" class="source-badge"></p>
+  <section id="scene-result" class="scene" data-persona="">
+    <div class="film-grain" aria-hidden="true"></div>
+    <div class="result-ambient" aria-hidden="true"></div>
+
+    <!-- 第一屏：电影角色 Reveal -->
+    <article class="reveal" id="persona-card">
+      <div class="reveal-copy">
+        <p class="reveal-kicker">NOW REVEALING · 你的麦门电影人格</p>
+        <h2 id="r-persona-name" class="persona-name"></h2>
+        <p id="r-persona-en" class="persona-en"></p>
+        <p id="r-persona-tagline" class="persona-tagline"></p>
+        <div class="reveal-movie">
+          <p class="reveal-movie-label">主演电影</p>
+          <p id="r-movie-title" class="movie-title"></p>
+          <p id="r-movie-genre" class="movie-genre"></p>
+        </div>
+        <div class="reveal-meal">
+          <p class="reveal-meal-label">戏中同款 · 真实餐品</p>
+          <p id="r-meal"></p>
+        </div>
+        <p id="r-source" class="source-badge"></p>
+      </div>
+      <div class="reveal-poster">
+        <figure class="poster-figure">
+          <div class="poster-glow" aria-hidden="true"></div>
+          <img id="r-poster-img" class="poster-img" src="" alt="AI 生成的概念海报（示例）" />
+          <i class="poster-sheen" aria-hidden="true"></i>
+        </figure>
+        <figcaption class="poster-hint">AI 按下方提示词生成的示例海报 · 可在 WorkBuddy 里为你的片名重新出图</figcaption>
+      </div>
     </article>
 
-    <!-- 电影海报风格卡 -->
-    <article class="card movie-card">
-      <p class="card-kicker">你的专属电影</p>
-      <figure class="poster-figure">
-        <img id="r-poster-img" class="poster-img" src="" alt="AI 生成的概念海报（示例）" />
-        <figcaption class="poster-hint">↑ AI 按下方提示词生成的示例海报 · 可在 WorkBuddy 里为你的片名重新出图</figcaption>
-      </figure>
-      <div class="poster-frame">
-        <p id="r-movie-title" class="movie-title"></p>
-        <p id="r-movie-genre" class="movie-genre"></p>
-      </div>
+    <!-- 次级信息：六维得分 -->
+    <article class="card scores-card">
+      <p class="card-kicker">PERSONA METER · 六维人格光谱</p>
+      <div id="r-scores" class="score-grid"></div>
+    </article>
+
+    <!-- 角色档案 -->
+    <article class="card dossier-card">
+      <p class="card-kicker">CHARACTER DOSSIER · 角色档案</p>
       <dl class="kv">
-        <dt>匹配餐品</dt><dd id="r-meal"></dd>
         <dt>主角身份</dt><dd id="r-identity"></dd>
         <dt>角色简介</dt><dd id="r-intro"></dd>
         <dt>经典台词</dt><dd id="r-quote" class="quote"></dd>
@@ -91,7 +176,7 @@
 
     <!-- 海报提示词 -->
     <article class="card prompt-card">
-      <p class="card-kicker">电影海报提示词（可直接复制去生图）</p>
+      <p class="card-kicker">POSTER LAB · 海报提示词（可直接复制去生图）</p>
       <div class="tabs">
         <button class="tab active" data-tab="zh">中文版</button>
         <button class="tab" data-tab="en">English</button>
@@ -102,9 +187,10 @@
       <p class="tip">默认竖版 3:4；提示词已含画幅与负面提示词，适合主流 AI 生图工具。</p>
     </article>
 
-    <!-- 分镜预览 -->
+    <!-- 分镜 -->
     <article class="card storyboard-card">
-      <p class="card-kicker">15 秒预告片分镜（5 镜 × 3 秒）</p>
+      <p class="card-kicker">TRAILER BOARD · 15 秒预告片分镜（5 镜 × 3 秒）</p>
+      <div class="film-timeline" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
       <div id="r-storyboard" class="shot-list"></div>
       <button class="btn btn-ghost" data-copy-target="r-storyboard">复制全部分镜</button>
     </article>
@@ -120,9 +206,10 @@
       <p class="disclaimer">本页面为娱乐创作，非麦当劳官方出品；餐品信息以麦当劳官方渠道为准。</p>
     </article>
 
-    <!-- Star 引导 -->
-    <article class="card star-card">
-      <p class="card-kicker">喜欢这个脑洞？</p>
+    <!-- Star 引导：片尾 Credit -->
+    <article class="star-card">
+      <div class="credit-fade" aria-hidden="true"></div>
+      <p class="credit-label">FIN · 片尾字幕</p>
       <p class="star-text">项目已开源，正在参加 2026 麦当劳程序员创意开发大赛。<br />你的 Star 就是我们的票房。</p>
       <a id="star-link" class="btn btn-star" href="https://github.com/kaoing2012-art/mcverse-lab" target="_blank" rel="noopener">⭐ Star on GitHub</a>
     </article>

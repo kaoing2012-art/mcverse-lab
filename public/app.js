@@ -36,6 +36,11 @@
     }
   }
 
+  /* ---------- Showcase「我也想试镜」→ 触发开始 ---------- */
+  document.querySelectorAll('[data-goto-quiz]').forEach((b) => {
+    b.addEventListener('click', () => $('#btn-start').click());
+  });
+
   /* ---------- 启动 ---------- */
   $('#btn-start').addEventListener('click', async () => {
     try {
@@ -86,6 +91,11 @@
     const done = state.answers.filter((a) => a !== null).length;
     $('#quiz-progress').style.width = `${(done / 4) * 100}%`;
     $('#btn-submit').disabled = done < 4;
+    // 胶片格：已答 = done，当前格 = current
+    document.querySelectorAll('#filmstrip .frame').forEach((f, i) => {
+      f.classList.toggle('done', state.answers[i] !== null);
+      f.classList.toggle('current', state.answers[i] === null && i === done);
+    });
   }
 
   /* ---------- 提交 ---------- */
@@ -133,6 +143,9 @@
   /* ---------- 渲染结果 ---------- */
   function renderResult() {
     const r = state.result;
+    // 人格主色环境光：scene-result[data-persona] 驱动 CSS 变量 --persona-accent
+    $('#scene-result').dataset.persona = String(r.persona?.id || 'P1');
+
     $('#r-persona-name').textContent = r.character.personaName;
     $('#r-persona-en').textContent = r.character.personaEn;
     $('#r-persona-tagline').textContent = r.character.tagline;
