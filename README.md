@@ -2,7 +2,7 @@
 
 ![Node.js](https://img.shields.io/badge/Node.js-18%2B-3c873a?style=flat-square)
 ![依赖](https://img.shields.io/badge/dependencies-0-e0b25c?style=flat-square)
-![测试](https://img.shields.io/badge/tests-22%20passed-2ea44f?style=flat-square)
+![测试](https://img.shields.io/badge/tests-24%20passed-2ea44f?style=flat-square)
 ![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
 ![Contest](https://img.shields.io/badge/2026%20M--CODE-Contest-c8102e?style=flat-square)
 
@@ -141,7 +141,7 @@ WorkBuddy【专家·技能·连接器】→【连接器】→【自定义连接�
 ## 🏃 运行测试
 
 ```bash
-npm test          # 22 个测试：评分确定性、256 组合全遍历、匹配稳定性、
+npm test          # 24 个测试：评分确定性、256 组合全遍历、匹配稳定性、
                   # 写操作拦截、Token 脱敏、Demo 降级、分镜时间码等
 ```
 
