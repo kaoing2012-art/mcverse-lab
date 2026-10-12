@@ -19,7 +19,7 @@
 
 ---
 
-## 👀 三种人格长什么样（以下全部为真实 MCP 数据）
+## 👀 三种人格长什么样（餐品来自麦当劳 MCP 餐品营养列表）
 
 <table>
 <tr>
@@ -61,7 +61,7 @@
 | 你说 / 你做 | 它给你 |
 |---|---|
 | 回答 4 道趣味人格题 | 6 种麦门电影人格之一（确定性评分，同输入必同结果） |
-| 自动查询麦当劳 MCP | 与人格匹配的**真实餐品**（MCP 不可用时明确标注 DEMO 模式） |
+| 自动查询麦当劳 MCP | 与人格匹配的**麦当劳 MCP 真实餐品数据**（餐品营养列表；仅在提供定位且门店菜单查询成功时才用「当前门店菜单」）；MCP 不可用时明确标注 DEMO 模式 |
 | 一键生成 | 电影片名 / 类型 / 主角身份 / 角色简介 / 经典台词 / 分享文案 |
 | 生成海报提示词 | 中英双语，竖版 3:4，含画幅与负面提示词，可直接粘贴进生图工具 |
 | **直接把海报画出来** | 配套 Skill 可调用 WorkBuddy 生图能力，把提示词变成**真海报图**（每张约 5-10 积分，需你确认） |
@@ -80,18 +80,23 @@ cd mcverse-lab
 
 前往 [open.mcd.cn/mcp](https://open.mcd.cn/mcp) → 手机号登录 → 右上角「控制台」→「激活」→ 复制 Token。
 
-### 2. 配置 Token（二选一）
+### 2. 配置 Token（只支持以下两种方式）
+
+> ⚠️ **本项目不会读取 `.env` 文件**（没有引入 dotenv，也没有任何 dotenv 依赖）。
+> `.env.example` 仅用于说明可用的环境变量名，**"复制成 `.env` 就生效"是不成立的**。
 
 ```bash
-# 方式 A：环境变量
-export MCD_MCP_TOKEN=你的Token        # macOS / Linux
-set MCD_MCP_TOKEN=你的Token           # Windows
+# 方式 A：环境变量（推荐）
+#   Windows PowerShell : $env:MCD_MCP_TOKEN="你的Token"
+#   Windows CMD        : set MCD_MCP_TOKEN=你的Token
+#   macOS / Linux      : export MCD_MCP_TOKEN=你的Token
+export MCD_MCP_TOKEN=你的Token
 
-# 方式 B：写入文件
+# 方式 B：写入本地文件（内容只放 Token 本身，不要加引号或前缀）
 mkdir -p ~/.config/mcd && echo "你的Token" > ~/.config/mcd/mcp_token
 ```
 
-> ⚠️ 没配 Token 也能跑——项目会进入 **DEMO 模式**，并在结果里明确标注「非实时数据」。
+> 没配 Token 也能跑——项目会进入 **DEMO 模式**，并在结果里明确标注「非实时数据」。
 
 ### 3. 启动 Web Demo
 
@@ -104,7 +109,7 @@ npm start          # 即 node src/server.js
 
 ```bash
 node src/cli.js --answers 1,0,3,2              # A/B/C/D 对应 0/1/2/3
-node src/cli.js --answers 1,0,3,2 --location 上海市黄浦区   # 按定位查询门店菜单
+node src/cli.js --answers 1,0,3,2 --location 上海市黄浦区   # 可选：尝试查询当前门店菜单（失败则回退营养列表）
 ```
 
 ### 5. 在 WorkBuddy 中使用（Skill）
@@ -120,8 +125,18 @@ Skill 会按 `skills/mcverse/SKILL.md` 的流程出题、调用 MCP、生成完�
 
 ### 6. 配置 MCP 连接器（WorkBuddy / Cursor / Cherry Studio 等）
 
-复制 `mcp-config.example.json` 内容，替换 `YOUR_MCP_TOKEN` 后粘贴到
+`mcp-config.example.json` 是一份**可直接被 `JSON.parse` 解析的纯 JSON**（不含任何注释——
+JSON 标准不允许注释，所以本文件把所有说明都放在这里）：
+
+| 字段 | 说明 |
+|---|---|
+| `mcpServers.mcd-mcp.type` | 固定为 `streamablehttp`（麦当劳 MCP 使用 Streamable HTTP 传输） |
+| `mcpServers.mcd-mcp.url` | 官方端点 `https://mcp.mcd.cn` |
+| `mcpServers.mcd-mcp.headers.Authorization` | `Bearer <你的 MCP Token>`，**必须替换 `YOUR_MCP_TOKEN`** |
+
+使用方法：把该文件内容复制出来，替换 `YOUR_MCP_TOKEN` 后粘贴到
 WorkBuddy【专家·技能·连接器】→【连接器】→【自定义连接器】→【配置MCP】，保存并启用。
+其它客户端（Cursor / Cherry Studio / Trae / VSCode）配置格式一致。
 
 ## 🏃 运行测试
 
@@ -172,9 +187,13 @@ node scripts/security-scan.mjs
 - **零依赖**：Node.js 18+ 原生能力实现全部功能（含 MCP Streamable HTTP 客户端）
 - **确定性**：评分、平分规则、匹配、文案生成全部纯函数，同输入必同输出
 - **安全**：
+  - **只读白名单（默认拒绝）**：仅允许 `now-time-info` / `list-nutrition-foods` /
+    `query-nearby-stores` / `query-meals` / `query-meal-detail` 五个查询类工具，
+    名单之外的任何工具（含未来新增工具）代码层直接拒绝
   - Token 只存在于服务端进程（环境变量 / 本地文件），浏览器不可见
-  - 代码级写操作黑名单（`create-order` / `auto-bind-coupons` / `draw-lottery` 等），命中即拒绝
   - 日志与错误信息统一脱敏（`Bearer ***`）
+- **数据来源分级**：`live_store`（门店菜单）/ `live_catalog`（餐品营养列表）/ `demo`（演示数据），
+  三者在 UI 与导出文本中都如实标注，不夸大来源
 - **诚实降级**：MCP 失败自动进入 DEMO 模式，结果页显著标注，绝不把演示数据说成实时数据
 - **工具发现**：先 `tools/list` 再调用，不假定任何工具名一定存在
 

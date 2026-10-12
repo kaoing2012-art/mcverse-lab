@@ -8,6 +8,29 @@
 
 import { PERSONAS } from './persona.js';
 
+/**
+ * 餐品数据来源的可信度分级（措辞规则，勿随意改动）：
+ * - live_store   ：query-meals 真正成功 → 可称「当前门店菜单」
+ * - live_catalog ：list-nutrition-foods 成功 → 只能称「麦当劳 MCP 真实餐品数据 / 餐品营养列表」
+ *                  禁止表述为「当前在售」「今天可点」「实时门店菜单」
+ * - demo         ：MCP 不可用，使用本地演示数据，必须明确标注
+ */
+export const SOURCE_LABELS = {
+  live_store: '餐品数据：麦当劳 MCP 当前门店菜单',
+  live_catalog: '餐品数据：麦当劳 MCP 真实餐品数据（餐品营养列表）',
+  demo: '【DEMO 模式：MCP 不可用，本结果使用本地演示数据，非实时】',
+};
+
+/** 导出文本里跟在餐品名后的来源说明 */
+export const MEAL_SOURCE_NOTE = {
+  live_store: '（来自麦当劳 MCP 当前门店菜单）',
+  live_catalog: '（来自麦当劳 MCP 真实餐品数据）',
+  demo: '【DEMO 模式：非实时数据】',
+};
+
+export const sourceLabelOf = (source) => SOURCE_LABELS[source] || SOURCE_LABELS.demo;
+export const mealSourceNoteOf = (source) => MEAL_SOURCE_NOTE[source] || MEAL_SOURCE_NOTE.demo;
+
 /** 每个人格的电影宇宙设定。{meal} 为餐品名插值位。 */
 export const PERSONA_MOVIE = {
   P1: {
@@ -262,7 +285,7 @@ export function exportResultText(result) {
   lines.push(`麦门电影宇宙 · 专属电影档案`);
   lines.push(`=====================================`);
   lines.push(`人格：${character.personaName}（${character.personaEn}）`);
-  lines.push(`匹配餐品：${meal.item.name}${source === 'live' ? '（来自麦当劳 MCP 实时数据）' : '【DEMO 模式：非实时数据】'}`);
+  lines.push(`匹配餐品：${meal.item.name}${mealSourceNoteOf(source)}`);
   lines.push(`片名：${character.movieTitle}`);
   lines.push(`类型：${character.movieGenre}`);
   lines.push(`主角身份：${character.protagonistIdentity}`);

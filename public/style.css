@@ -135,7 +135,8 @@ body {
 .score-cell .n { color: var(--gold); font-weight: 800; font-size: 17px; }
 .score-cell .l { color: var(--text-dim); font-size: 11px; }
 .source-badge { display: inline-block; font-size: 12px; padding: 4px 12px; border-radius: 999px; margin-top: 10px; }
-.source-badge.live { color: #7ad48a; border: 1px solid rgba(122,212,138,.4); }
+.source-badge.live_catalog,
+.source-badge.live_store { color: #7ad48a; border: 1px solid rgba(122,212,138,.4); }
 .source-badge.demo { color: #f2b56b; border: 1px solid rgba(242,181,107,.5); background: rgba(242,181,107,.08); }
 
 .poster-frame {

@@ -1,17 +1,19 @@
 /**
  * McVerse Lab —— 主流水线
- * 人格评分 → MCP 真实餐品查询（失败自动降级 Demo）→ 匹配 → 电影内容生成
+ * 人格评分 → MCP 餐品数据查询（失败自动降级 Demo）→ 匹配 → 电影内容生成
  *
- * source 字段取值：
- * - 'live'：全部餐品来自麦当劳 MCP 实时查询
- * - 'demo'：MCP 不可用，使用本地 Demo 数据（结果中会明确标注）
+ * source 字段取值（餐品数据来源分级）：
+ * - 'live_store'   ：query-meals 成功 → 当前门店菜单
+ * - 'live_catalog' ：list-nutrition-foods 成功 → 麦当劳 MCP 真实餐品数据（餐品营养列表）
+ *                    （不表示门店当前在售状态，措辞不得写成「在售 / 可点」）
+ * - 'demo'         ：MCP 不可用，使用本地 Demo 数据（结果中会明确标注）
  */
 
 import { scoreQuiz } from './persona.js';
 import { McpClient, loadToken, McpError } from './mcp-client.js';
 import { normalizeMcpItems, matchMeals, loadDemoMenu } from './matching.js';
 import {
-  generateCharacter, generatePosterPrompts, generateStoryboard, exportResultText,
+  generateCharacter, generatePosterPrompts, generateStoryboard, exportResultText, sourceLabelOf,
 } from './generator.js';
 
 /**
@@ -28,9 +30,9 @@ export async function runPipeline(answers, opts = {}) {
   const debug = { toolsCalled: [], startedAt: new Date().toISOString(), mcpError: null };
 
   let menu = null;
-  let source = 'live';
+  let source = null;
 
-  // ---- MCP 真实查询（工具发现 → 只读查询）----
+  // ---- MCP 查询（工具发现 → 只读白名单内调用）----
   try {
     const client = opts.mcpClient || new McpClient({ token: loadToken(opts.token) });
     const tools = await client.listTools();
@@ -39,7 +41,7 @@ export async function runPipeline(answers, opts = {}) {
 
     let rawItems = null;
 
-    // 路径 A：有定位 → 门店菜单（更真实）；路径 B：营养餐品表（无需定位）
+    // 路径 A：有定位 → 尝试门店菜单（成功才算 live_store）
     if (opts.location && toolNames.has('query-nearby-stores') && toolNames.has('query-meals')) {
       const stores = await client.callTool('query-nearby-stores', { address: opts.location });
       debug.toolsCalled.push('query-nearby-stores');
@@ -47,11 +49,14 @@ export async function runPipeline(answers, opts = {}) {
       if (storeId && toolNames.has('query-meals')) {
         rawItems = await client.callTool('query-meals', { storeId });
         debug.toolsCalled.push('query-meals');
+        if (rawItems) source = 'live_store';
       }
     }
+    // 路径 B：餐品营养列表（无需定位，不代表门店在售状态）
     if (!rawItems && toolNames.has('list-nutrition-foods')) {
       rawItems = await client.callTool('list-nutrition-foods', {});
       debug.toolsCalled.push('list-nutrition-foods');
+      if (rawItems) source = 'live_catalog';
     }
     if (!rawItems) {
       throw new McpError('MCP 上没有可用的只读餐品查询工具');
@@ -67,6 +72,7 @@ export async function runPipeline(answers, opts = {}) {
     source = 'demo';
     menu = loadDemoMenu().items;
   }
+  if (!source) source = 'demo';
 
   // ---- 匹配 + 生成 ----
   const matched = matchMeals(scored.personaId, menu, 3);
@@ -77,9 +83,7 @@ export async function runPipeline(answers, opts = {}) {
 
   return {
     source,
-    sourceLabel: source === 'live'
-      ? '餐品数据：麦当劳 MCP 实时查询'
-      : '【DEMO 模式：MCP 不可用，本结果使用本地演示数据，非实时】',
+    sourceLabel: sourceLabelOf(source),
     persona: scored.persona,
     scores: scored.scores,
     isTie: scored.isTie,

@@ -33,13 +33,24 @@
 工具发现 tools/list
    ├─ 有定位且工具可用：
    │    query-nearby-stores(address) → 提取 storeId
-   │      → query-meals(storeId) → 门店真实菜单 ─┐
-   ├─ 无定位 / 工具缺失：                         ├→ 归一化 → 人格匹配
-   │    list-nutrition-foods() → 餐品表 ─────────┘
-   └─ 全部失败 → DEMO 模式（本地 demo-menu.json，输出明确标注非实时）
+   │      → query-meals(storeId) 成功 → source = live_store（当前门店菜单）─┐
+   ├─ 无定位 / 门店路径未成功：                                              ├→ 归一化 → 人格匹配
+   │    list-nutrition-foods() → source = live_catalog（餐品营养列表）──────┘
+   └─ 全部失败 → source = demo（本地 demo-menu.json，输出明确标注非实时）
 ```
 
 单次完整请求最多调用 3 个工具（tools/list + 2 个查询），远低于限流阈值。
+
+### 数据来源分级（措辞规则）
+
+| source | 触发条件 | 允许的表述 | 禁止的表述 |
+|---|---|---|---|
+| `live_store` | `query-meals` 真正成功 | 「当前门店菜单」 | — |
+| `live_catalog` | `list-nutrition-foods` 成功 | 「麦当劳 MCP 真实餐品数据 / 餐品营养列表」 | ❌ 当前在售、今天可点、实时门店菜单 |
+| `demo` | MCP 不可用 | 「【DEMO 模式…非实时】」（必须原文展示） | ❌ 任何暗示实时的说法 |
+
+> 原因：`list-nutrition-foods` 返回的是**全国餐品营养数据**，**不反映任何门店的当前在售状态**。
+> 只有 `query-meals` 返回的才是特定门店的可售卖菜单。两者不可混用措辞。
 
 ## 3. 响应处理
 
@@ -50,11 +61,16 @@
 
 ## 4. 安全与合规
 
-### 写操作硬拦截
-`src/mcp-client.js` 维护写操作黑名单（`WRITE_TOOLS`）：
-`create-order`、`cancel-order`、`auto-bind-coupons`、`draw-lottery`、
-`mall-create-order`、`party-order-create`、`delivery-create-address`。
-`callTool()` 对黑名单工具直接抛错，**不发起任何网络请求**（有单元测试覆盖）。
+### 只读白名单（默认拒绝）
+
+`src/mcp-client.js` 维护**只读白名单** `READ_ONLY_TOOLS`，仅允许：
+
+```
+now-time-info · list-nutrition-foods · query-nearby-stores · query-meals · query-meal-detail
+```
+
+`callTool()` 对**名单之外的任何工具**（含下单、领券、抽奖等写操作，以及未来的新增工具）
+直接抛错，**不发起任何网络请求**（有单元测试覆盖：写操作拦截 + 未知工具默认拒绝）。
 本项目全链路不涉及下单、支付、领券等任何资金/权益操作。
 
 ### Token 安全
@@ -71,9 +87,13 @@
 ## 5. 业务价值
 
 麦当劳 MCP 在本项目中扮演「真实世界的连接器」：人格测试的结论只有落到
-一份**真实存在、当前可点**的餐品上，电影角色才可信、可传播。
-相比内置一份静态菜单，MCP 让内容与真实供给保持一致——这也是「麦门电影宇宙」
-区别于普通趣味测试的核心：**你的电影主角，是今天真的能吃到的那一口。**
+一份**真实存在**的餐品上（来自麦当劳 MCP 的餐品数据，而非凭空编造的名字），
+电影角色才可信、可传播。相比内置一份静态菜单，MCP 让内容与官方数据保持一致——
+这也是「麦门电影宇宙」区别于普通趣味测试的核心：
+**你的电影主角，是一件真实存在的餐品。**
+
+> 注：默认走 `list-nutrition-foods`（餐品营养列表），该数据**不代表门店当前在售状态**；
+> 只有当用户提供定位且 `query-meals` 成功时，才会使用「当前门店菜单」这一表述。
 
 ## 6. 实测记录
 

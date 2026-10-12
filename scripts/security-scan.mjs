@@ -8,6 +8,9 @@
  * 1. 已知真实 Token 值（从 $MCD_MCP_TOKEN 或 ~/.config/mcd/mcp_token 读取，仅比对不入输出）
  * 2. 常见凭证格式（Bearer 长串 / ghp_ / github_pat_ / sk- / AKIA 等）
  * 3. 高风险文件名（.env、mcp_token、*.token、*.pem、*.key 等）
+ *
+ * 安全约束：本脚本只输出「文件名 + 凭证类型」，绝不输出匹配内容本身
+ * （任何长度的前缀也不行）。
  */
 
 import { readFileSync, readdirSync, statSync } from 'node:fs';
@@ -68,7 +71,7 @@ for (const f of files) {
   for (const { name, re } of PATTERNS) {
     const m = text.match(re);
     if (m && !ALLOWLIST.some((a) => m[0].includes(a))) {
-      findings.push({ rel, why: `${name}: ${m[0].slice(0, 24)}…` });
+      findings.push({ rel, why: `匹配到${name}` });   // 只记类型，不记内容
     }
   }
 }

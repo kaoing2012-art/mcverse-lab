@@ -10,8 +10,8 @@
  * 安全约束：
  * - Token 只从 构造参数 / 环境变量 MCD_MCP_TOKEN / ~/.config/mcd/mcp_token 读取；
  * - 任何日志与错误信息中 Token 一律脱敏为 ***；
- * - 本客户端只调用只读查询工具，代码层面禁止调用 create-order 等写操作
- *   （见 WRITE_TOOLS 黑名单，命中即抛错）。
+ * - 采用「只读白名单」：仅允许调用下列工具，其它任何 Tool（含未来的新增工具）
+ *   一律默认拒绝，从根本上杜绝下单、领券、抽奖等写操作。
  */
 
 import { readFileSync } from 'node:fs';
@@ -20,10 +20,21 @@ import { join } from 'node:path';
 
 export const MCP_ENDPOINT = 'https://mcp.mcd.cn';
 
-/** 写操作黑名单：本项目的任何调用路径都不允许触达这些工具 */
-export const WRITE_TOOLS = new Set([
-  'create-order', 'cancel-order', 'auto-bind-coupons', 'draw-lottery',
-  'mall-create-order', 'party-order-create', 'delivery-create-address',
+/**
+ * 只读白名单（全部为查询类工具）：
+ * - now-time-info         获取当前时间
+ * - list-nutrition-foods  餐品营养列表（不代表门店在售状态）
+ * - query-nearby-stores   查询附近门店
+ * - query-meals           查询门店可售卖餐品（当前门店菜单）
+ * - query-meal-detail     查询餐品详情
+ * 不在名单内的一律拒绝。
+ */
+export const READ_ONLY_TOOLS = new Set([
+  'now-time-info',
+  'list-nutrition-foods',
+  'query-nearby-stores',
+  'query-meals',
+  'query-meal-detail',
 ]);
 
 export class McpError extends Error {
@@ -192,12 +203,12 @@ export class McpClient {
   }
 
   /**
-   * 调用工具。写操作直接拒绝（代码级安全闸）。
+   * 调用工具。只读白名单之外的任何工具直接拒绝（代码级安全闸）。
    * @returns {any} 结构化内容（优先解析 text 内容中的 JSON）
    */
   async callTool(name, args = {}) {
-    if (WRITE_TOOLS.has(name)) {
-      throw new McpError(`安全拦截：${name} 是写操作，本项目禁止调用`);
+    if (!READ_ONLY_TOOLS.has(name)) {
+      throw new McpError(`安全拦截：${name} 不在只读白名单内，本项目禁止调用`);
     }
     if (!this.initialized) await this.initialize();
     const res = await this.#post({

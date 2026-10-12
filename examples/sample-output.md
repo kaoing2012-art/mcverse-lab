@@ -2,15 +2,19 @@
 
 本目录存放运行示例：
 
-- `sample-output-live.txt` —— **真实 MCP 数据**输出（2026-10-10 实测，answers=0,2,1,1 → 热血冒险型）
+- `sample-output-live.txt` —— **真实 MCP 数据**输出（answers=0,2,1,1 → 热血冒险型）
 - `sample-output.txt` —— DEMO 模式输出（answers=1,0,3,2 → 快乐社交型）
 
 生成方式：
 
 ```bash
 node src/cli.js --answers 0,2,1,1 > examples/sample-output-live.txt   # 需配置 Token
-node src/cli.js --answers 1,0,3,2 > examples/sample-output.txt        # 无 Token 时自动 DEMO
+MCD_MCP_TOKEN=invalid node src/cli.js --answers 1,0,3,2 > examples/sample-output.txt   # 强制 DEMO
 ```
+
+> 关于来源措辞：`list-nutrition-foods` 得来的数据在输出中记为
+> 「来自麦当劳 MCP 真实餐品数据」，**不表示门店当前在售状态**；
+> 只有 `query-meals` 成功时才会写「来自麦当劳 MCP 当前门店菜单」。
 
 ## 真实数据输出示例（节选）
 
@@ -18,7 +22,7 @@ node src/cli.js --answers 1,0,3,2 > examples/sample-output.txt        # 无 Toke
 麦门电影宇宙 · 专属电影档案
 =====================================
 人格：热血冒险型（The Blaze Runner）
-匹配餐品：麦辣鸡翅-2块（来自麦当劳 MCP 实时数据）
+匹配餐品：麦辣鸡翅-2块（来自麦当劳 MCP 真实餐品数据）
 片名：《麦辣鸡翅-2块疾走》
 类型：热血动作片
 主角身份：深夜城市的麦辣骑士，胃是油箱，辣是燃料

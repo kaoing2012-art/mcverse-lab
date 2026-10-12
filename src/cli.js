@@ -4,7 +4,7 @@
  * 用法：
  *   node src/cli.js                      # 交互式问答（无 TTY 时使用默认答案）
  *   node src/cli.js --answers 0,1,2,0    # 直接指定四题选项
- *   node src/cli.js --location 上海市    # 可选：按定位查询门店菜单
+ *   node src/cli.js --location 上海市    # 可选：按定位尝试查询当前门店菜单（失败则回退餐品营养列表）
  *
  * 输出完整电影档案 JSON + 文本到 stdout。
  */

@@ -34,8 +34,10 @@ node src/cli.js --answers <a>,<b>,<c>,<d>
 按以下顺序向用户展示：
 
 1. **人格结果卡**：人格名称 + 宣传语 + 六维得分概览（`scores` 字段）
-2. **匹配餐品**：明确标注数据来源——
-   - `source: "live"` → 「来自麦当劳 MCP 实时查询」
+2. **匹配餐品**：明确标注数据来源，**三种取值措辞不可混用**——
+   - `source: "live_store"` → 「餐品数据：麦当劳 MCP 当前门店菜单」
+   - `source: "live_catalog"` → 「餐品数据：麦当劳 MCP 真实餐品数据（餐品营养列表）」
+     ⚠️ 该来源**不代表门店当前在售状态**，严禁写成「当前在售 / 今天可点 / 实时门店菜单」
    - `source: "demo"` → **必须原文展示**「【DEMO 模式：MCP 不可用，本结果使用本地演示数据，非实时】」
 3. **电影角色档案**：片名 / 类型 / 主角身份 / 简介 / 台词 / 分享文案
 4. **海报提示词**：中英双语各一份，提示用户可直接复制去生图工具使用
@@ -48,9 +50,9 @@ node src/cli.js --answers <a>,<b>,<c>,<d>
 
 用户同意后：
 
-1. 取 `poster.zh`（中文提示词）作为基础，用 **ImageGen 工具**生成竖版海报
-2. 参数建议：`size: "1024x1536"`（竖版 3:4）、`quality: "high"`、
-   `output_dir` 指向项目 `public/posters/` 或用户指定目录
+1. 取 `poster.zh`（中文提示词）作为基础，用 **ImageGen 工具**生成海报
+2. 画幅：提示词本身已要求**竖版 3:4**；生图工具若没有精确的 3:4 尺寸参数，
+   只说明「竖版 3:4」即可，**不要伪造具体像素尺寸**（例如 1024×1536 实为 2:3，不要标注成 3:4）
 3. 提示词里保留原有灯光/色彩/构图描述，并追加一句：
    「画面中不要出现任何文字、水印、品牌标识，只要画面。」
    （避免生成商标与错字，符合合规要求）
@@ -62,22 +64,26 @@ node src/cli.js --answers <a>,<b>,<c>,<d>
 ### 可选：定位增强
 
 如果用户愿意提供大致位置（如「上海市黄浦区」），追加 `--location` 参数，
-流程会改走 `query-nearby-stores → query-meals`（真实门店菜单，更准确）。
+流程会先走 `query-nearby-stores → query-meals`；**只有 `query-meals` 真正成功时**
+结果才标为 `live_store`（当前门店菜单），否则回退到 `list-nutrition-foods`（`live_catalog`）。
 用户不愿提供时不要强求，直接走无需定位的 `list-nutrition-foods`。
 
 ## MCP 使用规范（重要）
 
 1. **先做工具发现**：不假定 `list-nutrition-foods` 等工具名一定存在，
    先 `tools/list` 确认可用工具后再调用。
-2. **只读白名单**：`now-time-info`、`list-nutrition-foods`、`query-nearby-stores`、
-   `query-meals`、`query-meal-detail`。其余工具一律不碰；
-   `create-order`、`auto-bind-coupons`、`draw-lottery` 等写操作在代码层已被拦截。
+2. **只读白名单（默认拒绝）**：仅允许 `now-time-info`、`list-nutrition-foods`、
+   `query-nearby-stores`、`query-meals`、`query-meal-detail` 五个查询类工具；
+   **名单之外的任何工具（含未来的新增工具）一律拒绝**，代码层已做硬拦截。
 3. **失败降级**：MCP 报错（401 未配置 Token / 429 限流 / 网络异常）时，
    自动进入 Demo 模式，并如实告知用户当前是演示数据。
    **禁止把 Demo 数据说成实时数据。**
-4. **Token 安全**：Token 只放在环境变量 `MCD_MCP_TOKEN` 或
+4. **数据来源措辞**：`list-nutrition-foods` 得来的数据只能称
+   「麦当劳 MCP 真实餐品数据 / 餐品营养列表」，**不得**表述成
+   「当前在售 / 今天可点 / 实时门店菜单」；只有 `query-meals` 成功才能称「当前门店菜单」。
+5. **Token 安全**：Token 只放在环境变量 `MCD_MCP_TOKEN` 或
    `~/.config/mcd/mcp_token`。任何输出、日志、对话中都不出现 Token 内容。
-5. **限流**：600 次/分钟。单次会话最多调用 4 次工具，不要循环重试。
+6. **限流**：600 次/分钟。单次会话最多调用 4 次工具，不要循环重试。
 
 ## 合规红线
 
