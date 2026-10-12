@@ -58,7 +58,11 @@ nodejs
 > Topics 会影响 GitHub 搜索结果排序与「相关仓库」推荐，建议全部填上。
 
 **Social Preview**（可选，提升分享卡片点击率）：
-仓库 ⚙️ → Social preview → Upload an image → 用 `docs/01-hero.png`（1200×630 效果最佳，可先裁剪）。
+路径：仓库主页 → 仓库名下方标签栏最右侧 **Settings**（若标签被折叠，点 **⋯** 下拉里选 Settings）
+→ 进入设置页后在 **General** 页里**往下滚**，找到 **Social preview** 区块 → 点 **Edit** → **Upload an image...**
+→ 上传 1280×640 的图（官方要求：PNG/JPG/GIF 且 **< 1MB**，推荐 1280×640）
+> 现成素材：`mcverse-lab-assets/social-preview-1280x640.png`（已按规格生成，84KB）
+> 快速定位技巧：在设置页按 `Ctrl + F` 搜 `Social preview` 可直接跳到位。
 
 ## 四、提交前检查清单
 
